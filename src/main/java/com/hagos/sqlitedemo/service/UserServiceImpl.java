@@ -34,4 +34,40 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
+    public String updateUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            try {
+                List<User> users = userRepository.findByEmail(user.getEmail());
+                users.stream().forEach(s -> {
+                    User updatedUser = userRepository.findById(s.getId()).get();
+                    updatedUser.setEmail(user.getEmail());
+                    updatedUser.setUsername(user.getUsername());
+                    userRepository.save(updatedUser);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            return "User does not exist...";
+        }
+        return null;
+    }
+
+    @Transactional
+    public String deleteUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            try {
+                List<User> users = userRepository.findByEmail(user.getEmail());
+                users.stream().forEach(s -> userRepository.delete(s));
+                return "User record deleted successfully";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            return "User does not exist...";
+        }
+        return null;
+    }
+
 }

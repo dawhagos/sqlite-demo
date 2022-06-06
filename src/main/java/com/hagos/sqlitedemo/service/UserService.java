@@ -8,4 +8,8 @@ public interface UserService {
     String createUser(User user);
 
     List<User> readUsers();
+
+    String updateUser(User user);
+
+    String deleteUser(User user);
 }
