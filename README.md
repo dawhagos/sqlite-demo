@@ -33,7 +33,8 @@ Example POST Request to create a new user:
 ```
 {
     "email": "your@email.com",
-    "username": "name"
+    "username": "name",
+    "password": "password123"
 }
 ```
 Note that ID is generated for you, so you shouldn't include an ID in your request.
