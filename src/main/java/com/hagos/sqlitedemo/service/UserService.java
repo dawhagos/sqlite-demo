@@ -17,8 +17,8 @@ public class UserService {
     @Transactional
     public String createUser(User user) {
         try {
-            if(!userRepository.existsByEmail(user.getEmail())) {
-                user.setId(userRepository.findMaxId() + 1);
+            if (!userRepository.existsByEmail(user.getEmail())) {
+                user.setId(null == userRepository.findMaxId() ? 0 : userRepository.findMaxId() + 1);
                 userRepository.save(user);
                 return "User record created successfully";
             } else {
@@ -30,7 +30,7 @@ public class UserService {
         return null;
     }
 
-    public List<User> readUsers(){
+    public List<User> readUsers() {
         return userRepository.findAll();
     }
 

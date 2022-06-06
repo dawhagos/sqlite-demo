@@ -1,14 +1,29 @@
 package com.hagos.sqlitedemo.controller;
 
+import com.hagos.sqlitedemo.model.User;
+import com.hagos.sqlitedemo.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class UserController {
+    private UserService userService;
 
-    @RequestMapping(value = "info", method = RequestMethod.GET)
-    public String info() {
-        return "the application is up...";
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "createuser", method = RequestMethod.POST)
+    public String createUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @RequestMapping(value = "readusers", method = RequestMethod.GET)
+    public List<User> getUsers() {
+        return userService.readUsers();
     }
 }
